@@ -35,7 +35,7 @@ The service follows a modular architecture with the following components:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/log-ingestion-service.git
+git clone https://github.com/tiwariayush700/log-ingestion-service.git
 cd log-ingestion-service
 ```
 

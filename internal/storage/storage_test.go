@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

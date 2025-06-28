@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

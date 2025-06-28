@@ -1,4 +1,4 @@
-module github.com/yourusername/log-ingestion-service
+module github.com/tiwariayush700/log-ingestion-service
 
 go 1.20
 

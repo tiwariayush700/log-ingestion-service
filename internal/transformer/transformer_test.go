@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 )
 
 func TestTransformPosts(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 )
 
 // Fetcher is responsible for retrieving data from external APIs

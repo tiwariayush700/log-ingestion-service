@@ -3,7 +3,7 @@ package transformer
 import (
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 )
 
 // Transformer is responsible for transforming data

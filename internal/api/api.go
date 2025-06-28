@@ -4,19 +4,29 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/yourusername/log-ingestion-service/internal/storage"
-	"github.com/yourusername/log-ingestion-service/internal/tracker"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 )
+
+// StorageInterface defines the methods required for storage
+type StorageInterface interface {
+	GetPosts(ctx interface{}) ([]models.EnrichedPost, error)
+	GetPostByID(ctx interface{}, id string) (models.EnrichedPost, error)
+}
+
+// TrackerInterface defines the methods required for tracker
+type TrackerInterface interface {
+	GetLatestStatus(ctx interface{}) (models.IngestStatus, error)
+}
 
 // API handles HTTP requests
 type API struct {
 	router  *gin.Engine
-	storage *storage.Storage
-	tracker *tracker.Tracker
+	storage StorageInterface
+	tracker TrackerInterface
 }
 
 // New creates a new API instance
-func New(storage *storage.Storage, tracker *tracker.Tracker) *API {
+func New(storage StorageInterface, tracker TrackerInterface) *API {
 	router := gin.Default()
 	api := &API{
 		router:  router,

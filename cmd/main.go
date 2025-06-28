@@ -9,12 +9,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/config"
-	"github.com/yourusername/log-ingestion-service/internal/api"
-	"github.com/yourusername/log-ingestion-service/internal/fetcher"
-	"github.com/yourusername/log-ingestion-service/internal/storage"
-	"github.com/yourusername/log-ingestion-service/internal/tracker"
-	"github.com/yourusername/log-ingestion-service/internal/transformer"
+	"github.com/tiwariayush700/log-ingestion-service/config"
+	"github.com/tiwariayush700/log-ingestion-service/internal/api"
+	"github.com/tiwariayush700/log-ingestion-service/internal/fetcher"
+	"github.com/tiwariayush700/log-ingestion-service/internal/storage"
+	"github.com/tiwariayush700/log-ingestion-service/internal/tracker"
+	"github.com/tiwariayush700/log-ingestion-service/internal/transformer"
 )
 
 func main() {

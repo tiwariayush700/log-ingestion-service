@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -82,12 +82,18 @@ func (t *Tracker) RecordFailure(ctx context.Context, err error) error {
 }
 
 // GetLatestStatus retrieves the latest ingestion status
-func (t *Tracker) GetLatestStatus(ctx context.Context) (models.IngestStatus, error) {
+func (t *Tracker) GetLatestStatus(ctx interface{}) (models.IngestStatus, error) {
 	collection := t.client.Database(t.database).Collection(t.collection)
+
+	// Convert to context.Context if needed
+	ctxValue, ok := ctx.(context.Context)
+	if !ok {
+		ctxValue = context.Background()
+	}
 
 	opts := options.FindOne().SetSort(bson.D{{Key: "timestamp", Value: -1}})
 	var status models.IngestStatus
-	err := collection.FindOne(ctx, bson.M{}, opts).Decode(&status)
+	err := collection.FindOne(ctxValue, bson.M{}, opts).Decode(&status)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return models.IngestStatus{}, fmt.Errorf("no ingestion status found")

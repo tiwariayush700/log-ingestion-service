@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/yourusername/log-ingestion-service/internal/models"
+	"github.com/tiwariayush700/log-ingestion-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -69,17 +69,23 @@ func (s *Storage) StorePosts(ctx context.Context, posts []models.EnrichedPost) e
 }
 
 // GetPosts retrieves all posts from the database
-func (s *Storage) GetPosts(ctx context.Context) ([]models.EnrichedPost, error) {
+func (s *Storage) GetPosts(ctx interface{}) ([]models.EnrichedPost, error) {
 	collection := s.client.Database(s.database).Collection(s.collection)
 
-	cursor, err := collection.Find(ctx, bson.M{})
+	// Convert to context.Context if needed
+	ctxValue, ok := ctx.(context.Context)
+	if !ok {
+		ctxValue = context.Background()
+	}
+
+	cursor, err := collection.Find(ctxValue, bson.M{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to find posts: %w", err)
 	}
-	defer cursor.Close(ctx)
+	defer cursor.Close(ctxValue)
 
 	var posts []models.EnrichedPost
-	if err := cursor.All(ctx, &posts); err != nil {
+	if err := cursor.All(ctxValue, &posts); err != nil {
 		return nil, fmt.Errorf("failed to decode posts: %w", err)
 	}
 
@@ -87,8 +93,14 @@ func (s *Storage) GetPosts(ctx context.Context) ([]models.EnrichedPost, error) {
 }
 
 // GetPostByID retrieves a post by its ID
-func (s *Storage) GetPostByID(ctx context.Context, id string) (models.EnrichedPost, error) {
+func (s *Storage) GetPostByID(ctx interface{}, id string) (models.EnrichedPost, error) {
 	collection := s.client.Database(s.database).Collection(s.collection)
+
+	// Convert to context.Context if needed
+	ctxValue, ok := ctx.(context.Context)
+	if !ok {
+		ctxValue = context.Background()
+	}
 
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
@@ -96,7 +108,7 @@ func (s *Storage) GetPostByID(ctx context.Context, id string) (models.EnrichedPo
 	}
 
 	var post models.EnrichedPost
-	err = collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&post)
+	err = collection.FindOne(ctxValue, bson.M{"_id": objectID}).Decode(&post)
 	if err != nil {
 		return models.EnrichedPost{}, fmt.Errorf("failed to find post: %w", err)
 	}
